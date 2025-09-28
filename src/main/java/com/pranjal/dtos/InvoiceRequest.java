@@ -1,7 +1,6 @@
 package com.pranjal.dtos;
 
 import com.pranjal.entity.embeddable.PaymentMethod;
-import jakarta.persistence.Enumerated;
 import lombok.*;
 
 import java.time.LocalDate;

@@ -4,7 +4,6 @@ import com.pranjal.entity.embeddable.ProductDetail;
 import com.pranjal.entity.embeddable.VendorDetail;
 import com.pranjal.entity.embeddable.WarrantyDetail;
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
