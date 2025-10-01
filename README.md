@@ -317,7 +317,7 @@ This project is licensed under the terms specified in the project.
 For questions, support, or feedback, please reach out:
 
 - **Developer**: Pranjal Jais
-- **Email**: pranjaljais2@example.com
+- **Email**: pranjaljais2@gmail.com
 - **Project Repository**: https://github.com/pranjal0jais/Home-Appliance-Manager/
 - **Issues**: Report bugs or request features through GitHub Issues
 - **LinkedIn**: https://www.linkedin.com/in/pranjal-jais-549433366/
