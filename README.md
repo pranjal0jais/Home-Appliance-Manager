@@ -308,21 +308,21 @@ docker run -p 8080:8080 \
 - Check network connectivity to Cloudinary services
 - Ensure file size is within limits
 
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
 ## License
 
 This project is licensed under the terms specified in the project.
 
 ## Contact
 
-For questions or support, please contact the development team.
+For questions, support, or feedback, please reach out:
+
+- **Developer**: Pranjal Jais
+- **Email**: pranjaljais2@example.com
+- **Project Repository**: https://github.com/pranjal0jais/Home-Appliance-Manager/
+- **Issues**: Report bugs or request features through GitHub Issues
+- **LinkedIn**: https://www.linkedin.com/in/pranjal-jais-549433366/
+
+For urgent matters or security concerns, please email directly with "URGENT" in the subject line.
 
 ## Acknowledgments
 
