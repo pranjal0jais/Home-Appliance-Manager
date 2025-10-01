@@ -20,7 +20,11 @@ target/
 *.ipr
 .zencoder
 .env
-
+.mvn
+.mvnw
+.mvnw.cmd
+.gradle
+.gitattributes
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/

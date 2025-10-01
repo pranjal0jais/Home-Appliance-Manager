@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
@@ -25,89 +26,62 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<String> addProduct(
             @RequestPart("request") String stringRequest,
-            @RequestPart("invoiceImage") MultipartFile invoiceImage) {
+            @RequestPart("invoiceImage") MultipartFile invoiceImage) throws Exception {
+
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.findAndRegisterModules();
         objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-        ProductRequest request = null;
 
-        try{
-            request = objectMapper.readValue(stringRequest, ProductRequest.class);
-            request.setInvoiceImage(invoiceImage);
-            boolean isSaved = productService.saveProduct(request);
-            if(isSaved){
-                return ResponseEntity.status(HttpStatus.CREATED).body("Product Saved");
-            }
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Product cannot be saved");
-        }catch(Exception e){
-            log.error(e.getLocalizedMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Product cannot be saved");
+        ProductRequest request = objectMapper.readValue(stringRequest, ProductRequest.class);
+        request.setInvoiceImage(invoiceImage);
+
+        boolean isSaved = productService.saveProduct(request);
+        if (isSaved) {
+            return ResponseEntity.status(HttpStatus.CREATED).body("Product Saved");
         }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Product cannot be saved");
     }
 
     @GetMapping("/users")
     public ResponseEntity<List<ProductResponse>> getAllProductsByUserId(
-            @RequestParam(name = "userId")String userId){
-        try{
-            List<ProductResponse> list = productService.getAllProductsByUserId(userId);
-            return ResponseEntity.status(HttpStatus.OK).body(list);
-        }catch(Exception e){
-            log.error(e.getLocalizedMessage());
-        }
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(List.of());
+            @RequestParam(name = "userId") String userId) {
+        List<ProductResponse> list = productService.getAllProductsByUserId(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(list);
     }
 
     @GetMapping
     public ResponseEntity<ProductResponse> getProductByProductId(
-            @RequestParam(name = "productId") String productId){
-        try{
-            return ResponseEntity.status(HttpStatus.OK).body(productService.getProductById(productId));
-        }catch(Exception e){
-            log.error(e.getLocalizedMessage());
-        }
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            @RequestParam(name = "productId") String productId) {
+        return ResponseEntity.status(HttpStatus.OK).body(productService.getProductById(productId));
     }
 
     @DeleteMapping
     public ResponseEntity<Void> deleteProduct(
-            @RequestParam(name = "productId") String productId){
+            @RequestParam(name = "productId") String productId) {
         log.info("Deleting product with id: {}", productId);
-        try{
-            boolean deleted = productService.deleteProduct(productId);
-            if(deleted){
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
-        }catch(Exception e){
-            log.error(e.getLocalizedMessage());
+
+        boolean deleted = productService.deleteProduct(productId);
+        if (deleted) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @PutMapping
     public ResponseEntity<String> updateProduct(
-            @RequestBody ProductUpdateRequest productUpdateRequest
-    ){
-        try{
-            boolean isUpdated = productService.updateProduct(productUpdateRequest);
-            if(isUpdated){
-                return ResponseEntity.status(HttpStatus.OK).body("Product Updated");
-            }
-            return ResponseEntity.status(HttpStatus.OK).body("Product not Updated");
-        }catch(Exception e){
-            log.error(e.getLocalizedMessage());
+            @RequestBody ProductUpdateRequest productUpdateRequest) {
+
+        boolean isUpdated = productService.updateProduct(productUpdateRequest);
+        if (isUpdated) {
+            return ResponseEntity.status(HttpStatus.OK).body("Product Updated");
         }
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Product not Updated");
+        return ResponseEntity.status(HttpStatus.OK).body("Product not Updated");
     }
 
     @GetMapping("/share")
-    public ResponseEntity<ProductResponse> shareProduct(@RequestParam(name = "productId") String productId){
-        try{
-            return ResponseEntity.status(HttpStatus.OK).body(productService.getProductById(productId));
-        } catch (Exception e) {
-            log.error(e.getLocalizedMessage());
-        }
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    public ResponseEntity<ProductResponse> shareProduct(
+            @RequestParam(name = "productId") String productId) {
+        return ResponseEntity.status(HttpStatus.OK).body(productService.getProductById(productId));
     }
 }
