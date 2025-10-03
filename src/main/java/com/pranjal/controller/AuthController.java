@@ -24,20 +24,20 @@ public class AuthController {
     private final Utility jwtUtil;
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> login(@RequestBody AuthRequest authRequest){
-        try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword()));
-            com.pranjal.entity.User user =
-                    (User) userDetailServiceImpl.loadUserByUsername(authRequest.getEmail());
-            return ResponseEntity.status(HttpStatus.OK).body(Map.of(
-                    "userId", user.getUserId(),
-                    "fullname", user.getFullName(),
-                    "email", user.getEmail(),
-                    "token", jwtUtil.generateToken(user.getUsername())
-            ));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of());
-        }
+    public ResponseEntity<Map<String, String>> login(@RequestBody AuthRequest authRequest) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword())
+        );
+
+        com.pranjal.entity.User user =
+                (User) userDetailServiceImpl.loadUserByUsername(authRequest.getEmail());
+
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of(
+                "userId", user.getUserId(),
+                "fullname", user.getFullName(),
+                "email", user.getEmail(),
+                "token", jwtUtil.generateToken(user.getUsername())
+        ));
     }
 
     @PostMapping("/register")
